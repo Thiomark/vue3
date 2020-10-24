@@ -18,6 +18,7 @@ export default {
 <style>
 #app {
   font-family: 'Roboto', sans-serif;
+  width: 100vw;
 }
 </style>
 

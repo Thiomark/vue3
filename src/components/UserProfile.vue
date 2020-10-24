@@ -7,20 +7,22 @@
         <div class="user-profile_follower-count">
             <strong>Followers: {{followers}}</strong>
         </div> 
-        <hr class="just-line">
-        <ul class="user-twoots">
-          <div v-for="twoot in user.twoots" :key="twoot.id">
-            <h2>{{twoot.message}}</h2>
-          </div>
-        </ul>
+    </div>
+    <div class="posted-twoots">
+      <UserMessage v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" @favourite="toggleFavourite"/>
     </div>
   </div>
 </template>
 
 <script>
 
+import UserMessage from './MessageItems.vue'
+
 export default {
   name: 'UserProfile',
+  components: {
+    UserMessage
+  },
   data(){
     return{
       followers: 0,
@@ -46,6 +48,9 @@ export default {
   methods: {
     followPeople(){
       this.followers ++
+    },
+    toggleFavourite(id){
+      console.log(`Favor twoot ${id}`)
     }
   },
   // This will run when ever the page i refreshed
@@ -80,7 +85,7 @@ export default {
     flex-direction: column;
     margin-right: 50px;
     padding: 20px;
-    background-color: white;
+    background-color: rgb(248, 248, 248);
     border-radius: 5px;
     border: 1px solid #DFE3E8;
     font-size: 14px;
