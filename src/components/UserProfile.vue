@@ -7,16 +7,16 @@
         <div class="user-profile_follower-count">
             <strong>Followers: {{followers}}</strong>
         </div> 
-        <form class="twoot-panel" @submit.prevent="createNewTwoot">
-          <label>New twoot</label>
-          <textarea cols="30" rows="10" v-model="newTwootContent"></textarea>
+        <form class="twoot-panel" @submit.prevent="createNewTwoot" >
+          <label>New twoot {{numOfCharUsed}}/180</label>
+          <textarea cols="30" rows="10" v-model="newTwootContent" :class="{'overTheLimit': numOfCharUsed > 180}"></textarea>
           <div class="typeOfTwoot">
           <label for="newTwootType">Type: </label>
           <select id="newTwootType" v-model="selectedTwootType">
             <option :value="option.value" v-for="(option, index) in twootType" :key="index"> {{ option.name }} </option>
           </select>
           <br>
-          <button id="theSubmitButton" >
+          <button id="theSubmitButton" :class="{'hideTheSubmitButton': numOfCharUsed > 180}">
             Twoot
           </button>
         </div>
@@ -64,6 +64,10 @@ export default {
     }
   },
   computed: {
+    numOfCharUsed(){
+      return this.newTwootContent.length
+    },
+
     fullName(){
       return `${this.user.firstName} ${this.user.lastName}`
     }
@@ -105,10 +109,25 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .user-profile_username{
   font-size: 15px;
   font-weight: bolder;
+}
+
+.create-the-twot{
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.overTheLimit{
+  border: 1px soild red;
+  background-color: red;
+}
+
+.hideTheSubmitButton{
+  visibility: hidden;
 }
 
 .user-profile{
