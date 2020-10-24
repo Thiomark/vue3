@@ -7,10 +7,27 @@
         <div class="user-profile_follower-count">
             <strong>Followers: {{followers}}</strong>
         </div> 
+        <form class="twoot-panel" @submit.prevent="createNewTwoot">
+          <label>New twoot</label>
+          <textarea cols="30" rows="10" v-model="newTwootContent"></textarea>
+          <div class="typeOfTwoot">
+          <label for="newTwootType">Type: </label>
+          <select id="newTwootType" v-model="selectedTwootType">
+            <option :value="option.value" v-for="(option, index) in twootType" :key="index"> {{ option.name }} </option>
+          </select>
+          <br>
+          <button id="theSubmitButton" >
+            Twoot
+          </button>
+        </div>
+        </form>
+        
     </div>
     <div class="posted-twoots">
       <UserMessage v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" @favourite="toggleFavourite"/>
     </div>
+    
+
   </div>
 </template>
 
@@ -25,6 +42,12 @@ export default {
   },
   data(){
     return{
+      selectedTwootType: 'instant',
+      newTwootContent: "",
+      twootType: [
+        {value: 'draft', name: 'Draft'},
+        {value: 'instant', name: 'Instant Twoot'}
+      ],
       followers: 0,
       user: {
         id: 1,
@@ -46,6 +69,17 @@ export default {
     }
   },
   methods: {
+    createNewTwoot(){
+      console.log('1')
+      if(this.newTwootContent && this.selectedTwootType === "instant"){
+        console.log('2')
+        this.user.twoots.unshift({
+          id: this.user.twoots.length + 1,
+          message: this.newTwootContent
+        })
+        this.newTwootContent = ""
+      }
+    },
     followPeople(){
       this.followers ++
     },
@@ -72,6 +106,11 @@ export default {
 </script>
 
 <style>
+.user-profile_username{
+  font-size: 15px;
+  font-weight: bolder;
+}
+
 .user-profile{
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -92,13 +131,18 @@ export default {
 }
 
 .the-admim{
+  text-align: center;
   background-color: rgb(153, 39, 153);
   color: #ffffff;
   border-radius: 5px;
-  margin: auto;
-  padding: 10px 10px;
+  padding: 2px 2px ;
   font-weight: bold;
   font-size: 13px;
+  width: 70px;
+}
+
+.twoot-panel {
+  margin-top:  5px;
 }
 
 .just-line{
