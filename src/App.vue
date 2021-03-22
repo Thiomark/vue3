@@ -6,7 +6,6 @@
 
 <script>
 import UserProfile from './components/UserProfile.vue'
-
 export default {
   name: 'App',
   components: {
@@ -21,9 +20,3 @@ export default {
   width: 100vw;
 }
 </style>
-
-
-
-
-
-

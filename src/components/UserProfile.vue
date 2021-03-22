@@ -21,13 +21,10 @@
           </button>
         </div>
         </form>
-        
     </div>
     <div class="posted-twoots">
       <UserMessage v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" @favourite="toggleFavourite"/>
     </div>
-    
-
   </div>
 </template>
 
@@ -57,8 +54,8 @@ export default {
         email: 'something@gmail.com',
         isAdmin: false,
         twoots: [
-          {id: 1, message: "My first twoot guys"},
-          {id: 2, message: "I hate earch guys"}
+          {id: 1, message: "My first message"},
+          {id: 2, message: "my second message"}
         ]
       }
     }
